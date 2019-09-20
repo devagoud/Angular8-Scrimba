@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Customer} from './customer';
+import {CustomerServiceService} from '../customer-service.service';
 
 @Component({
   selector: 'app-customes',
@@ -10,7 +11,7 @@ export class CustomesComponent implements OnInit {
  title: string;
  people: Customer[];
  total: number;
-  constructor() { }
+  constructor(private customerService: CustomerServiceService) { }
 
   ngOnInit() {
     this.title = 'Customers';
@@ -23,6 +24,9 @@ export class CustomesComponent implements OnInit {
     const customers = this.people.filter(value => value.id === 1).reverse();
     console.log(customers);
     this.total = this.people.length;
+    this.customerService.getUsers().subscribe(value => {
+      this.people = value;
+    });
   }
 
 }
